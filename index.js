@@ -1,17 +1,21 @@
 async function fetchData() {
     const imgElement = document.getElementById("pokemonSprite");
+    const loader = document.getElementById("loader");
     const pokemonNameInput = document.getElementById("pokemonName");
     const pokemonDetails = document.getElementById("pokemonDetails");
+    const evolutionSprites = document.getElementById("evolutionSprites");
     const pokemonName = pokemonNameInput.value.toLowerCase();
   
     try {
+      // Reset UI
       imgElement.style.display = "none";
-      imgElement.alt = "Loading...";
       pokemonDetails.innerHTML = "";
+      evolutionSprites.innerHTML = "";
+      loader.style.display = "block";
   
+      // Fetch basic Pokémon data
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
       if (!response.ok) throw new Error("Pokémon not found.");
-  
       const data = await response.json();
   
       const pokemonSprite = data.sprites.front_default;
@@ -26,13 +30,26 @@ async function fetchData() {
       const evolutionResponse = await fetch(speciesData.evolution_chain.url);
       const evolutionData = await evolutionResponse.json();
   
+      // Evolution chain data
       const evolutions = [];
-      let currentEvolution = evolutionData.chain;
-      do {
-        evolutions.push(currentEvolution.species.name);
-        currentEvolution = currentEvolution.evolves_to[0];
-      } while (currentEvolution);
+      let current = evolutionData.chain;
   
+      while (current) {
+        evolutions.push(current.species.name);
+        current = current.evolves_to[0];
+      }
+  
+      // Fetch evolution sprites
+      for (const evo of evolutions) {
+        const evoData = await fetch(`https://pokeapi.co/api/v2/pokemon/${evo}`);
+        const evoJson = await evoData.json();
+        const evoImg = document.createElement("img");
+        evoImg.src = evoJson.sprites.front_default;
+        evoImg.alt = evo;
+        evolutionSprites.appendChild(evoImg);
+      }
+  
+      // Display data
       imgElement.src = pokemonSprite;
       imgElement.alt = `Sprite of ${pokemonName}`;
       imgElement.style.display = "block";
@@ -47,9 +64,24 @@ async function fetchData() {
         <p><strong>Evolutions:</strong> ${evolutions.join(" → ")}</p>
       `;
     } catch (error) {
-      console.error("Fetch error:", error);
-      imgElement.alt = "Error loading Pokémon sprite.";
-      pokemonDetails.innerHTML = `<p style="color: red;">Error: Unable to fetch Pokémon details.</p>`;
+      console.error("Error fetching data:", error);
+      pokemonDetails.innerHTML = `<p style="color: red;">Error: Could not fetch Pokémon details.</p>`;
+    } finally {
+      loader.style.display = "none";
     }
   }
+  const input = document.getElementById('pokemonName');
+
+  input.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {  // Check if Enter key is pressed
+      fetchData();                // Call your search function
+    }
+  });
+  document.addEventListener('click', () => {
+    const audio = document.getElementById('pokemonTheme');
+    if (audio.paused) {
+      audio.play();
+    }
+  }, { once: true });
   
+    

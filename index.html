@@ -14,12 +14,18 @@
       <input type="text" id="pokemonName" placeholder="Enter Pokémon name">
       <button onclick="fetchData()">Search</button>
     </div>
+
+    <div class="loader" id="loader"></div>
     <img id="pokemonSprite" alt="Pokémon Sprite">
     <div id="pokemonDetails"></div>
+    <div id="evolutionSprites"></div>
   </div>
+
   <footer>
     <p>Made by Akash Singh | Pokémon © Nintendo</p>
   </footer>
+  <audio id="pokemonTheme" src="pokemon_pokemon-theme-gotta-catch-em-all-master.mp3" autoplay loop></audio>
+
   <script src="index.js"></script>
 </body>
 </html>
