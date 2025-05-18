@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Wikipedia</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Wikipedia</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="container">
     <h1>Pokémon Wikipedia</h1>
-    <input type="text" id="pokemonName" placeholder="Enter Pokémon name">
-    <button onclick="fetchData()">Search</button>
+    <div class="search-box">
+      <input type="text" id="pokemonName" placeholder="Enter Pokémon name">
+      <button onclick="fetchData()">Search</button>
+    </div>
     <img id="pokemonSprite" alt="Pokémon Sprite">
-    <div id="pokemonDetails"></div> <!-- Container for Pokémon details -->
-    <script src="index.js"></script>
+    <div id="pokemonDetails"></div>
+  </div>
+  <footer>
+    <p>Made by Akash Singh | Pokémon © Nintendo</p>
+  </footer>
+  <script src="index.js"></script>
 </body>
 </html>
