@@ -1,31 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokémon Wikipedia</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokémon Wiki</title>
+
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <div class="container">
+
+<header>
     <h1>Pokémon Wikipedia</h1>
+
     <div class="search-box">
-      <input type="text" id="pokemonName" placeholder="Enter Pokémon name">
-      <button onclick="fetchData()">Search</button>
+        <input type="text" id="pokemonName" placeholder="Search Pokémon">
+        <button id="searchBtn">Search</button>
+        <div id="searchSuggestions" class="suggestions hidden"></div>
     </div>
 
-    <div class="loader" id="loader"></div>
-    <img id="pokemonSprite" alt="Pokémon Sprite">
-    <div id="pokemonDetails"></div>
-    <div id="evolutionSprites"></div>
+    <div class="filter-row">
+        <select id="typeFilter">
+            <option value="">All types</option>
+        </select>
+        <button id="sortBtn" class="sort-btn">Sort: A→Z</button>
+    </div>
+
+    <div class="button-row">
+        <button id="randomBtn">Random</button>
+        <button id="favoritesBtn">⭐ Favorites</button>
+        <button id="menuBtn" class="menu-btn">☰ Browse</button>
+        <button id="themeBtn">🌙 Theme</button>
+    </div>
+</header>
+
+<div id="loader" class="loader"></div>
+
+<section class="pokemon-container">
+
+    <div class="pokemon-card">
+
+        <img id="pokemonSprite">
+
+        <h2 id="pokemonTitle"></h2>
+
+        <p id="description"></p>
+
+        <div id="types"></div>
+
+        <div id="detailControls" class="detail-controls hidden">
+            <button id="favoriteToggle" class="favorite-toggle">Add to Favorites</button>
+            <button id="shinyToggle" class="shiny-toggle">Show Shiny</button>
+            <button id="compareToggle" class="compare-toggle">Add to Compare</button>
+        </div>
+
+        <div id="infoSummary" class="info-summary"></div>
+
+        <div class="info">
+            <p id="height"></p>
+            <p id="weight"></p>
+            <p id="abilities"></p>
+        </div>
+
+        <div id="statsContainer" class="info-section hidden">
+            <h3>Base Stats</h3>
+            <div id="stats"></div>
+        </div>
+
+        <div id="evolutionsContainer" class="info-section hidden">
+            <h3>Evolution Chain</h3>
+            <div id="evolutions"></div>
+        </div>
+
+        <div id="moreInfo" class="info-section hidden"></div>
+    </div>
+
+</section>
+
+<div id="comparePanel" class="compare-panel hidden">
+    <div class="compare-header">
+        <h3>Compare Pokémon</h3>
+        <button id="clearCompare" class="clear-compare">Clear Compare</button>
+    </div>
+    <div id="compareList" class="compare-list"></div>
+    <div id="compareGrid" class="compare-grid"></div>
+</div>
+
+<div id="menuOverlay" class="menu-overlay" aria-hidden="true">
+  <div class="menu-panel">
+    <button id="closeMenu" class="close-menu" aria-label="Close browse menu">×</button>
+    <h2>Browse Pokémon</h2>
+    <div class="favorites-section hidden">
+      <h3>Your Favorites</h3>
+      <div id="favoritesList"></div>
+    </div>
+    <div id="pokemonGrid"></div>
+    <div class="pagination-controls">
+      <button id="prevPage">Previous</button>
+      <span id="pageInfo">Page 1</span>
+      <button id="nextPage">Next</button>
+    </div>
   </div>
+</div>
 
-  <footer>
-    <p>Made by Akash Singh | Pokémon © Nintendo</p>
-  </footer>
-  <audio id="pokemonTheme" src="pokemon_pokemon-theme-gotta-catch-em-all-master.mp3" autoplay loop></audio>
+<script src="index.js"></script>
 
-  <script src="index.js"></script>
 </body>
+
 </html>
